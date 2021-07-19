@@ -1,11 +1,12 @@
 var backgroundImage;
 var docking;
-var colorful;
+var colorful_running;
 
 function preload(){
   backgroundImage=loadImage("spacebg.jpg")
   docking=loadImage("iss.png")
-  colorful=loadImage("spacecraft1.png")
+  colorful_running=loadAnimation("spacecraft1.png","spacecraft2.png","spacecraft3.png","spacecraft4.png")
+   man=loadImage("spacecraft1.png")
 }
 
 function setup() {
@@ -13,22 +14,22 @@ function setup() {
   dock=createSprite(300,150,20,20)
   dock.addImage("image",docking)
   dock.scale=0.9
-  dock.debug=true;
+  dock.debug=false;
 
-  color=createSprite(240,270,30,30)
-  color.addImage("image",colorful)
+ color=createSprite(240,270,30,30)
+ color.addAnimation("running",colorful_running)
   color.scale=0.1
-  color.debug=true;
+  color.debug=false;
+  color.debugMode=circle
 }
 
 function draw() {
   background(backgroundImage); 
   if (keyDown("up")) {
-    color.velocityY = -2;
+    color.velocityY = -0.5;
   }
-  if(color.isTouching(dock)){
-    color.velocityY=0;
-    text(20,20,"docking successfully")
+  if(this.color.position.y<210){
+   color.velocityY=0
   }
   
   drawSprites();
