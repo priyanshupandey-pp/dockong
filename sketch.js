@@ -1,12 +1,17 @@
 var backgroundImage;
 var docking;
 var colorful_running;
+var hasdocked=false
 
 function preload(){
   backgroundImage=loadImage("spacebg.jpg")
   docking=loadImage("iss.png")
-  colorful_running=loadAnimation("spacecraft1.png","spacecraft2.png","spacecraft3.png","spacecraft4.png")
-   man=loadImage("spacecraft1.png")
+  colorful1=loadImage("spacecraft1.png")
+  colorful2=loadImage("spacecraft2.png")
+  colorful3=loadImage("spacecraft3.png")
+  colorful4=loadImage("spacecraft4.png")
+  
+
 }
 
 function setup() {
@@ -17,20 +22,37 @@ function setup() {
   dock.debug=false;
 
  color=createSprite(240,270,30,30)
- color.addAnimation("running",colorful_running)
+ color.addImage(colorful1)
   color.scale=0.1
   color.debug=false;
-  color.debugMode=circle
 }
 
 function draw() {
   background(backgroundImage); 
-  if (keyDown("up")) {
-    color.velocityY = -0.5;
-  }
-  if(this.color.position.y<210){
-   color.velocityY=0
-  }
+  color.addImage(colorful1)
+  if(!hasdocked){
+
   
+  if (keyDown("up")) {
+    color.y =color.y-2 
+  }
+  if (keyDown("down")) {
+    color.y =color.y+2 
+  }
+  if (keyDown("left")) {
+    color.x =color.x-2 
+    color.addImage(colorful3)
+  }
+  if (keyDown("right")) {
+    color.x =color.x+2 
+    color.addImage(colorful4)
+  }
+}
+if(color.y<=(dock.y+70)&& color.x<=(dock.x-10)){
+  hasdocked=true
+  textSize(25)
+  fill ("white")
+  text ("docking successful",200,300)
+}
   drawSprites();
 }
